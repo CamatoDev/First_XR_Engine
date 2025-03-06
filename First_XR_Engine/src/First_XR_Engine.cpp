@@ -123,8 +123,17 @@ int main(int, char**)
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
+    bool gameWindow = false; // Variable pour l'ouverture la fenêtre de jeu
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     std::string keyPressed;
+
+    char inputWorld; // Variable pour le mot saisi
+    std::string correctWorld = "win"; // Variable pour le mot à trouver
+    std::string result; // Resultat de la tentative
+    
+    int mouseX = 0; // position de la souris en x 
+    int mouseY = 0;// position de la souris en y
+
     // Main loop
     bool done = false;
 #ifdef __EMSCRIPTEN__
@@ -154,7 +163,18 @@ int main(int, char**)
                 done = true;
             if (event.type == SDL_EVENT_KEY_DOWN) {
                 if (event.key.key == SDLK_P) {
-                    keyPressed = "P";
+                    keyPressed = "Bonjour je suis SDL3";
+                }
+                if(event.key.key == SDLK_ESCAPE){
+                    done = true;
+                }
+            }
+            //Evenement de la souris
+            if(event.type == SDL_EVENT_MOUSE_BUTTON_DOWN){
+                // Mettre la position de la souris dans les variables mouseX et mouseY
+                if(event.button.button == SDL_BUTTON_LEFT){
+                    mouseX = event.button.x;
+                    mouseY = event.button.y;
                 }
             }
         }
@@ -183,6 +203,8 @@ int main(int, char**)
             ImGui::Text(keyPressed.c_str());               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
+            if(ImGui::Button("Launch Game"))
+                gameWindow = true;
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -203,6 +225,30 @@ int main(int, char**)
             ImGui::Text("Hello from another window!");
             if (ImGui::Button("Close Me"))
                 show_another_window = false;
+            ImGui::End();
+        }
+
+        // 4. Afficher la fenêtre de jeux
+        if(gameWindow){
+            ImGui::Begin("Find The Word", &gameWindow);
+            ImGui::Text("Find the correct word tout win.");
+            ImGui::Text("Enter a word");
+            ImGui::InputText("##inputWorld", &inputWorld, CHAR_MAX);
+            ImGui::SameLine();
+            if(ImGui::Button("Check")){
+                if(&inputWorld == correctWorld){
+                    result = "You Win !!!";
+                }
+                else{
+                    result = "You Lose, Try again...";
+                }
+            }
+            ImGui::Text(result.c_str());
+            ImGui::Text("MouseX : %d", mouseX);
+            ImGui::SameLine();
+            ImGui::Text("MouseY : %d", mouseY);
+            if(ImGui::Button("Close Game"))
+                gameWindow = false;
             ImGui::End();
         }
 
