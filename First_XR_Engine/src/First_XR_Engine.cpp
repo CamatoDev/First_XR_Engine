@@ -127,7 +127,8 @@ int main(int, char**)
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
     std::string keyPressed;
 
-    char inputWorld; // Variable pour le mot saisi
+    char buf1[32] = ""; // Variable sui vas contenir le texte entré par le User.
+    std::string inputWorld; // Variable pour recuper le mot saisi
     std::string correctWorld = "win"; // Variable pour le mot à trouver
     std::string result; // Resultat de la tentative
     
@@ -231,17 +232,19 @@ int main(int, char**)
         // 4. Afficher la fenêtre de jeux
         if(gameWindow){
             ImGui::Begin("Find The Word", &gameWindow);
-            ImGui::Text("Find the correct word tout win.");
+            ImGui::Text("Find the correct word to win.");
             ImGui::Text("Enter a word");
-            ImGui::InputText("##inputWorld", &inputWorld, CHAR_MAX);
+            ImGui::InputText("##inputWorld", buf1, 32);
             ImGui::SameLine();
             if(ImGui::Button("Check")){
-                if(&inputWorld == correctWorld){
+                inputWorld.append(buf1);
+                if(inputWorld == correctWorld){
                     result = "You Win !!!";
                 }
                 else{
                     result = "You Lose, Try again...";
                 }
+                inputWorld = "";
             }
             ImGui::Text(result.c_str());
             ImGui::Text("MouseX : %d", mouseX);
