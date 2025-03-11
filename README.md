@@ -9,6 +9,16 @@ First_XR_Engine est un moteur de réalité augmentée développé en C++ permett
 - 🖥️ Interface utilisateur interactive avec ImGui
 - 🎮 Support de SDL3 pour la gestion des entrées et fenêtres
 - 🔧 Intégration de Glad2 pour le chargement des extensions OpenGL
+- ⌨️🖱️ **Ajout d'événements clavier et souris** :
+  - Gestion des appuis sur les touches du clavier
+  - Récupération des clics souris et de la position du curseur
+  - Affichage des entrées en temps réel dans l'interface ImGui
+- 🖼️ **Amélioration de l'interface ImGui** :
+  - Ajout de nouvelles fenêtres interactives
+  - Affichage dynamique de texte et de boutons
+  - Conditions pour afficher ou masquer des éléments selon les interactions utilisateur
+
+🛠️ **Ces ajouts permettent une meilleure compréhension du fonctionnement des entrées utilisateur et facilitent le debug via l'interface graphique.**
 
 ## Prérequis
 Avant d'utiliser First_XR_Engine, assurez-vous d'avoir installé :
@@ -66,4 +76,3 @@ Les contributions sont les bienvenues ! Pour proposer des modifications :
 
 ## Licence
 Ce projet est sous licence MIT. Voir le fichier `LICENSE` pour plus de détails.
-
